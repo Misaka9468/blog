@@ -174,3 +174,13 @@ int main(){
 
 主要思路是，将主-附看作一个组，对该组内进行分类讨论，可以看成是特殊的分组背包。分组背包中各分组是独立的，所以用变量遍历；依赖背包的组有主从关系，所以需要列出方案数分别讨论
 
+[P1064 金明的预算方案](https://github.com/Misaka9468/blog/blob/main/dp/bag dp/P1064 金明的预算方案.md)
+
+# 背包求方案数
+
+$dp[i][j]$ 就代表前i个物品，满足 j 的方案。
+
+把代表选与不选的max，改为 +
+
+[P2946 Cow Frisbee Team S](https://github.com/Misaka9468/blog/blob/main/dp/bag dp/P2946 Cow Frisbee Team S.md)
+
