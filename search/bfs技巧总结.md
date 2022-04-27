@@ -151,3 +151,96 @@ int main(){
 
 
 ```
+
+
+
+# 3 类似习题总结
+
+## 3.1 LC417 太平洋大西洋水流
+
+逆向思路，从边开始往内侵蚀，所有边能访问到的内部点都可以
+
+```cpp
+class Solution {
+public:
+
+    bool visPa[205][205];
+    bool visAt[205][205];
+    // flag=0 -> Pacific 
+    // flag=1 -> Atlantic
+    void bfs(int ri,int ci,vector<vector<int>>& heights,bool flag){
+        int n = heights[0].size();
+        int m = heights.size();
+        queue<pair<int,int>> q;
+        q.push(make_pair(ri,ci));
+        while(!q.empty()){
+            int r,c;
+            r = q.front().first;
+            c = q.front().second;
+            q.pop();
+            if(flag==0){
+                visPa[r][c] = 1;
+                if(r>0&&visPa[r-1][c]==0&&heights[r-1][c]>=heights[r][c]){
+                    visPa[r-1][c] = 1;
+                    q.push(make_pair(r-1,c));
+                }
+                if(r<m-1&&visPa[r+1][c]==0&&heights[r+1][c]>=heights[r][c]){
+                    visPa[r+1][c] = 1;
+                    q.push(make_pair(r+1,c));
+                }
+                if(c>0&&visPa[r][c-1]==0&&heights[r][c-1]>=heights[r][c]){
+                    visPa[r][c-1] = 1;
+                    q.push(make_pair(r,c-1));
+                }
+                if(c<n-1&&visPa[r][c+1]==0&&heights[r][c+1]>=heights[r][c]){
+                    visPa[r][c+1] = 1;
+                    q.push(make_pair(r,c+1));
+                }
+            }
+            else{
+                visAt[r][c] = 1;
+                if(r>0&&visAt[r-1][c]==0&&heights[r-1][c]>=heights[r][c]){
+                    visAt[r-1][c] = 1;
+                    q.push(make_pair(r-1,c));
+                }
+                if(r<m-1&&visAt[r+1][c]==0&&heights[r+1][c]>=heights[r][c]){
+                    visAt[r+1][c] = 1;
+                    q.push(make_pair(r+1,c));
+                }
+                if(c>0&&visAt[r][c-1]==0&&heights[r][c-1]>=heights[r][c]){
+                    visAt[r][c-1] = 1;
+                    q.push(make_pair(r,c-1));
+                }
+                if(c<n-1&&visAt[r][c+1]==0&&heights[r][c+1]>=heights[r][c]){
+                    visAt[r][c+1] = 1;
+                    q.push(make_pair(r,c+1));
+                }
+            }
+        }
+    }
+
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        int m = heights.size();
+        int n = heights[0].size();
+        for(int i=0;i<m;i++){
+            if(!visPa[i][0]) bfs(i,0,heights,0);
+            if(!visAt[i][n-1]) bfs(i,n-1,heights,1);
+        }
+        for(int i=0;i<n;i++){
+            if(!visPa[0][i]) bfs(0,i,heights,0);
+            if(!visAt[m-1][i]) bfs(m-1,i,heights,1);
+        }
+        vector<vector<int>> ans;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(visAt[i][j]&&visPa[i][j]){
+                    vector<int> tmp = {i,j};
+                    ans.push_back(tmp);
+                }
+            }
+        }
+        return ans;
+    }
+};
+```
+
