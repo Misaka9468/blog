@@ -65,3 +65,65 @@ https://www.luogu.com.cn/problem/P4343
  借教室，需要差分，我已经掌握啦
 
  自动AC机，总之写得不是很好，没看题解之前其实是没有把握到这个二分判断条件的精髓的，我只根据是否==k来判断judge，完全是因为有二分的标签硬套二分。
+
+# 二分
+
+总结：注意左闭右开的写法(左边永远是有效的,所以是mid+1)
+
+以及直接利用c++的stl，其中lower_bound是大于等于的第一个
+
+```c++
+#include <iostream>
+int arr[20];
+
+// 如果是求<x的最大值和<=x的最大值，只需要对应的>=x的-1与>x的-1就是
+
+//查找二分 左闭右开 左边永远有效，右边永远无效
+void binary_search(int left,int right,int num){
+    int mid;
+    while(left<right){
+        mid = left+(right-left)/2;
+        if(arr[mid]==num) {
+            printf("work1: %d \n",mid);
+            return ;
+        }
+        else if(arr[mid]>num)   right=mid;
+        else left=mid+1;  
+    }
+}
+//stl中, lower_bound寻找的是>=x的最小值  而upper_bound寻找的是>x的最小值
+void my_lower_bound(int left,int right,int num){
+    int mid;
+    while(left<right){
+        mid = left+(right-left)/2;
+        if(arr[mid]<num) left = mid+1;
+        else right=mid;
+    }
+    printf("lower_bound: %d \n",left);
+}
+
+
+void my_upper_bound(int left,int right,int num){
+    int mid;
+    while(left<right){
+        mid = left+(right-left)/2;
+        if(arr[mid]<=num) left = mid+1;
+        else right=mid;
+    }
+    printf("upper_bound: %d \n",left);
+}
+
+
+int main(){
+    for(int i = 0;i<20;i++){
+        arr[i]=2*i;
+    }
+    
+    binary_search(0,20,12);
+    my_lower_bound(0,20,12); // >=x 的最小值
+    my_upper_bound(0,20,12); // >x 的最小值
+
+    return 0;
+}
+
+```
