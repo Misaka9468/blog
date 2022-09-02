@@ -29,10 +29,27 @@ for i in 1->n:
 完全背包的滚动写法：
 
 ```
-for i in 1->n:
-	for j in 1->m: // 正序，可重复选取
+for i in 1->n:   // 考虑前i个
+	for j in 1->m: // 容量，正序，可重复选取
 		dp[j] = max(dp[j],dp[j-w[i]]+v[i])
 ```
+
+
+
+线性组合筛选：
+
+dp[j]=1代表了能被这w[]的线性组合得到
+
+```
+for i in 1->n:   // 考虑前i个
+	for j in 1->m: // 容量，正序，可重复选取
+		dp[j] = dp[j] | dp[j-w[i]]
+		
+// 觉得不好理解的话，换成 dp[j+w[i]] = dp[j] | dp[j+w[i]] 也可以
+ 
+```
+
+
 
 
 

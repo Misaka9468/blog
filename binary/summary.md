@@ -72,6 +72,25 @@ https://www.luogu.com.cn/problem/P4343
 
 以及直接利用c++的stl，其中lower_bound是大于等于的第一个
 
+
+
+**最优雅的二分写法：**
+
+* **求target**
+* **升序求upper_bound  >=x**
+* **升序求lower_bound  >x**
+
+* **降序求upper_bound <x**
+* **降序求lower_bound <=x**
+
+**只需要掌握前三种，都是左闭右开、l < r 、l = mid+1   r = mid，结果返回l或r都可以因为二者相等**
+
+**后面两个对应的是 前两者结果index-1**
+
+
+
+
+
 ```c++
 #include <iostream>
 int arr[20];
