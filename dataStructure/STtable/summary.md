@@ -12,10 +12,17 @@ $dp[i][j]$维护了$i$ 到 $i+2^j-1$ 这个区间的最值, 长度为$2^j$. 也�
 
 # ST模板及帮助记忆
 
-## ST表的更新
+
+
+
+
+## ST表的更新/建立
 
 ```cpp
-    for(int j=1;j<21;j++){ // 先j后i
+    // arr[i][0]代表了维护i到i的最值，也就是其本身
+	for(int i=1;i<=N;i++)
+       	arr[i][0] = num[i];
+	for(int j=1;j<21;j++){ // 先j后i
         for(int i=1;i<=N;i++){
             arr[i][j] = min(arr[i][j-1],arr[i+(1<<(j-1))][j-1]); // 第二点
         }
